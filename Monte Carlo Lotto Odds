@@ -1,0 +1,84 @@
+/**
+ * 
+ * Programming Exercise Write a Java program that uses a Monte Carlo algorithm to calculate the
+ * probability that next week’s lottery draw won’t have any consecutive pairs of numbers
+ * (e.g. 8 and 9 or 22 and 23) . Six numbers are drawn from 1 to 45
+ * 
+ */
+
+
+// THIS CODE TESTS FOR CONSECUTIVE NUMBERS. 
+// IT USES THE NUMBERS 0 - 44 FOR THIS TEST TO REPRESENT THE NUMBERS 1 - 45!!!! 
+
+package lab1;
+
+import java.text.DecimalFormat;
+import java.util.Arrays;
+import java.util.Random;
+
+public class Q1 {
+	public static void main(String args[]){
+		
+		double count = 0; // double to allow for percentage later in solution. 
+		int runCount = 1000000;
+		
+		
+		int[] arr = new int[45]; //creates an array of 45 numbers to reflect the numbers in the 'drum' before draw
+	for(int j = 0; j<runCount;j++) // the loop to rerun the code numerous times to get a good random result.
+	{
+	for(int i = 1; i<45; i++)
+	{
+		arr[i] = i;
+		// System.out.println(array[i]);
+	}
+	
+	ShuffleArray(arr); // shuffles the numbers in the 45 elements to a different order
+	int[] array2 = new int[6]; // creates a new array of size six and adds the first 6 elements of the 
+								// shuffled array of 45 into it. Ensuring that the 45 numbers are not repeated.
+	for(int i = 0; i<6; i++)
+	{	
+		array2 [i]=arr[i];
+	}
+	
+	Arrays.sort(array2); // this sorts the random 6 elements into order
+	
+	for(int i = 0; i<6; i++)
+	{	
+		//System.out.println(array2[i]);
+	}
+	for(int i = 0; i<5;i++)
+	{
+	if((array2[i+1])-(array2[i])==1) // check to see if two elements are consecutive
+			{
+				//System.out.println("We have a pair");
+				count++;
+				break;
+			}
+
+	
+	}
+	//System.out.println("Total number of pairs encountered "+count);
+
+	
+	}
+	DecimalFormat df = new DecimalFormat("#.00"); //changes the answer to printing two decimal places. See next print statement
+	double chances = (count/runCount)*100;
+	System.out.println("Chances of pair coming up in next draw:  "+df.format(chances) +" per cent");
+	}
+	
+	
+	private static void ShuffleArray(int[] array) // method to shuffle the array of 45 numbers
+	{
+	    int index, temp;
+	    Random random = new Random();
+	    for (int i = array.length - 1; i > 0; i--)
+	    {
+	        index = random.nextInt(i + 1);
+	        temp = array[index];
+	        array[index] = array[i];
+	        array[i] = temp;
+	    }
+	}
+
+
+	
